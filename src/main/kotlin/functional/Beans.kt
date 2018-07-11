@@ -18,12 +18,6 @@ fun beans() = beans {
 	bean("webHandler") {
 		RouterFunctions.toWebHandler(ref<Routes>().router(), HandlerStrategies.builder().viewResolver(ref()).build())
 	}
-	bean("messageSource") {
-		ReloadableResourceBundleMessageSource().apply {
-			setBasename("messages")
-			setDefaultEncoding("UTF-8")
-		}
-	}
 	bean {
 		val prefix = "classpath:/templates/"
 		val suffix = ".mustache"
@@ -31,11 +25,6 @@ fun beans() = beans {
 		MustacheViewResolver(Mustache.compiler().withLoader(loader)).apply {
 			setPrefix(prefix)
 			setSuffix(suffix)
-		}
-	}
-	profile("cors") {
-		bean("corsFilter") {
-			CorsWebFilter { CorsConfiguration().applyPermitDefaultValues() }
 		}
 	}
 }
