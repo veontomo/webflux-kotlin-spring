@@ -8,19 +8,19 @@ import reactor.core.publisher.Flux
 import java.time.Duration
 
 @Suppress("UNUSED_PARAMETER")
-class UserHandler {
+class DataHandler {
 
-	private val users = Flux.just(1, 2, 3)
+	private val data = Flux.just(1, 2, 3)
 
-	private val userStream = Flux
-			.zip(Flux.interval(Duration.ofMillis(100)), users.repeat())
+	private val dataStream = Flux
+			.zip(Flux.interval(Duration.ofMillis(1000)), data.repeat())
 			.map { it.t2 }
 
-	fun findAll(req: ServerRequest) =
-			ok().body(users)
+	fun getAll(req: ServerRequest) =
+			ok().body(data)
 
 	fun stream(req: ServerRequest) =
-			ok().bodyToServerSentEvents(userStream)
+			ok().bodyToServerSentEvents(dataStream)
 
 }
 

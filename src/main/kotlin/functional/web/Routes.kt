@@ -3,15 +3,18 @@ package functional.web
 import org.springframework.http.MediaType.*
 import org.springframework.web.reactive.function.server.router
 
-class Routes(private val userHandler: UserHandler) {
+class Routes(private val dataHandler: DataHandler) {
 
     fun router() = router {
-        "/api".nest {
+        "/data".nest {
             accept(APPLICATION_JSON).nest {
-                GET("/users", userHandler::findAll)
+                GET("/repeat", dataHandler::stream)
+            }
+            accept(APPLICATION_JSON).nest {
+                GET("/all", dataHandler::getAll)
             }
             accept(TEXT_EVENT_STREAM).nest {
-                GET("/users", userHandler::stream)
+                GET("/", dataHandler::stream)
             }
 
         }
